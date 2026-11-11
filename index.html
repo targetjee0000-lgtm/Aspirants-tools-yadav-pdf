@@ -1,0 +1,915 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JEE VAULT - My Study Library</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg:#090e18;
+  --card:#141e2e;
+  --card2:#1b2940;
+  --border:#29384e;
+  --text:#f4f7fc;
+  --muted:#8c9bb1;
+  --blue:#75adff;
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  background:
+    radial-gradient(ellipse at top left,#192b48,transparent 42%),
+    radial-gradient(ellipse at bottom right,#20203c,transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,sans-serif;
+  min-height:100vh;
+}
+
+.container {
+  max-width:1150px;
+  padding:25px 18px 60px;
+  margin:auto;
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:45px;
+}
+
+.logo {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon {
+  width:45px;height:45px;
+  display:grid;place-items:center;
+  border-radius:14px;
+  background:linear-gradient(135deg,#64a5ff,#7766e9);
+  font-size:23px;
+}
+
+.logo h2 {font-size:19px;margin:0}
+.logo small {color:var(--muted);letter-spacing:2px;font-size:9px}
+
+.clock {
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:12px;
+  border-radius:12px;
+  font-size:12px;
+  color:#b9d5ff;
+}
+
+.hero {margin-bottom:30px}
+.hero small {color:var(--blue);letter-spacing:3px;font-weight:700}
+.hero h1 {font-size:clamp(32px,6vw,49px);letter-spacing:-2px;margin:13px 0}
+.hero p {color:var(--muted);font-size:13px;line-height:1.8}
+
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:30px 0;
+}
+
+.stat {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+}
+
+.stat small {color:var(--muted)}
+.stat h2 {margin:10px 0 0;font-size:27px}
+
+.heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:38px 0 18px;
+}
+
+.heading h2 {font-size:18px;margin:0}
+
+.subjects {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+
+.subject {
+  padding:19px;
+  border-radius:17px;
+  background:var(--card);
+  border:1px solid var(--border);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.subject:hover,.subject.active {
+  transform:translateY(-3px);
+  border-color:var(--blue);
+  background:#1c2d47;
+}
+
+.subject .emoji {font-size:27px}
+.subject h3 {font-size:14px;margin:15px 0 7px}
+.subject p {font-size:11px;color:var(--muted);margin:0}
+.subject span {display:block;color:var(--blue);font-size:11px;margin-top:15px}
+
+.toolbar {
+  display:flex;
+  gap:10px;
+  margin-bottom:16px;
+}
+
+input,select,button {font-family:inherit}
+
+.search {
+  flex:1;
+  min-width:0;
+  background:var(--card);
+  color:white;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:14px;
+  outline:none;
+}
+
+.search:focus {border-color:var(--blue)}
+
+button {cursor:pointer}
+
+.primary {
+  background:linear-gradient(135deg,#5c9eff,#7767e9);
+  color:white;
+  border:0;
+  padding:13px 18px;
+  border-radius:11px;
+  font-weight:700;
+}
+
+.filters {
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  margin:18px 0;
+  padding-bottom:5px;
+}
+
+.filters button {
+  white-space:nowrap;
+  padding:9px 14px;
+  border-radius:30px;
+  background:var(--card);
+  color:var(--muted);
+  border:1px solid var(--border);
+}
+
+.filters button.active {
+  background:#254a76;
+  color:white;
+  border-color:#6ca8fa;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.pdf-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:17px;
+  border-radius:16px;
+  min-width:0;
+}
+
+.pdf-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.pdf-icon {
+  background:#38252e;
+  color:#ff8b9a;
+  padding:13px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.pdf-card h3 {
+  font-size:14px;
+  margin:17px 0 8px;
+  overflow-wrap:anywhere;
+}
+
+.info {
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.8;
+}
+
+.tag {
+  display:inline-block;
+  padding:6px 9px;
+  background:#20334e;
+  color:#9cc6ff;
+  border-radius:7px;
+  font-size:10px;
+  margin-top:12px;
+}
+
+.actions {
+  display:flex;
+  gap:7px;
+  margin-top:17px;
+}
+
+.actions button {
+  flex:1;
+  padding:10px 3px;
+  border:0;
+  border-radius:8px;
+  background:var(--card2);
+  color:white;
+  font-size:11px;
+}
+
+.actions button:hover {background:#344b6b}
+.actions .del {color:#ff9292}
+
+.empty {
+  grid-column:1/-1;
+  text-align:center;
+  padding:55px 15px;
+  background:var(--card);
+  border:1px dashed var(--border);
+  border-radius:16px;
+  color:var(--muted);
+}
+
+.empty div {font-size:35px;margin-bottom:12px}
+
+.upload-panel {
+  display:none;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  margin:20px 0;
+}
+
+.upload-panel.show {display:block}
+.upload-panel h3 {margin-top:0}
+
+.form-control {
+  width:100%;
+  padding:12px;
+  margin:8px 0 16px;
+  border-radius:9px;
+  background:#0b1422;
+  border:1px solid var(--border);
+  color:white;
+}
+
+.form-row {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+label {font-size:12px;color:#c3d0e2}
+
+.secondary {
+  background:#2b3a50;
+  color:white;
+  border:0;
+  padding:12px 17px;
+  border-radius:9px;
+}
+
+#message {font-size:12px;color:#8dbbff}
+
+/* PDF VIEWER */
+.viewer {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.92);
+  padding:12px;
+  align-items:center;
+  justify-content:center;
+}
+
+.viewer.show {display:flex}
+
+.viewer-box {
+  background:#111c2b;
+  width:100%;
+  max-width:1000px;
+  height:95%;
+  border:1px solid var(--border);
+  border-radius:13px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.viewer-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px;
+  gap:8px;
+}
+
+.viewer-head strong {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:13px;
+}
+
+.viewer-actions {display:flex;gap:7px}
+
+.viewer-actions button {
+  padding:9px 11px;
+  border:0;
+  border-radius:8px;
+  color:white;
+  background:#30425b;
+  white-space:nowrap;
+}
+
+#pdfViewer {
+  flex:1;
+  width:100%;
+  border:0;
+  background:white;
+}
+
+.viewer-note {
+  padding:10px;
+  color:var(--muted);
+  font-size:11px;
+  text-align:center;
+}
+
+footer {
+  text-align:center;
+  margin-top:55px;
+  font-size:10px;
+  color:#718096;
+}
+
+@media(max-width:750px) {
+  .subjects {grid-template-columns:repeat(2,1fr)}
+  .grid {grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:500px) {
+  .container {padding:18px 13px 40px}
+  .grid {grid-template-columns:1fr}
+  .stats {gap:7px}
+  .stat {padding:13px}
+  .stat h2 {font-size:21px}
+  .subject {padding:14px}
+  .toolbar {flex-direction:column}
+  .form-row {grid-template-columns:1fr}
+  .clock {font-size:10px}
+  .viewer {padding:3px}
+  .viewer-box {height:98%}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    <div>
+      <h2>JEE VAULT</h2>
+      <small>PERSONAL STUDY LIBRARY</small>
+    </div>
+  </div>
+  <div class="clock" id="clock">00:00:00</div>
+</header>
+
+<section class="hero">
+  <small>YOUR KNOWLEDGE SPACE</small>
+  <h1>Organise Your<br>Study Universe.</h1>
+  <p>All your JEE notes, modules, PYQs and books in one place.</p>
+</section>
+
+<div class="stats">
+  <div class="stat">
+    <small>Total PDFs</small>
+    <h2 id="total">0</h2>
+  </div>
+  <div class="stat">
+    <small>Collections</small>
+    <h2>04</h2>
+  </div>
+  <div class="stat">
+    <small>Storage used</small>
+    <h2 id="storage">0 MB</h2>
+  </div>
+</div>
+
+<div class="heading">
+  <h2>My Categories</h2>
+  <small style="color:#8796ac">04 SUBJECTS</small>
+</div>
+
+<div class="subjects">
+  <div class="subject" data-cat="Physics">
+    <div class="emoji">⚛️</div>
+    <h3>Physics</h3>
+    <p>Concepts & Numericals</p>
+    <span id="cPhysics">0 PDFs</span>
+  </div>
+
+  <div class="subject" data-cat="Chemistry">
+    <div class="emoji">🧪</div>
+    <h3>Chemistry</h3>
+    <p>IOC · OC · Physical</p>
+    <span id="cChemistry">0 PDFs</span>
+  </div>
+
+  <div class="subject" data-cat="Mathematics">
+    <div class="emoji">📐</div>
+    <h3>Mathematics</h3>
+    <p>Formulas & Practice</p>
+    <span id="cMathematics">0 PDFs</span>
+  </div>
+
+  <div class="subject" data-cat="Books">
+    <div class="emoji">📚</div>
+    <h3>Books</h3>
+    <p>NCERT & Reference</p>
+    <span id="cBooks">0 PDFs</span>
+  </div>
+</div>
+
+<div class="heading">
+  <h2>My PDF Collection</h2>
+  <small id="resultCount" style="color:#8796ac">0 FILES</small>
+</div>
+
+<div class="toolbar">
+  <input class="search" id="search" placeholder="⌕ Search your PDFs...">
+  <button class="primary" id="addBtn">＋ Add PDF</button>
+</div>
+
+<div class="upload-panel" id="uploadPanel">
+  <h3>＋ Add New PDF</h3>
+
+  <label>PDF Name</label>
+  <input class="form-control" id="pdfName" placeholder="e.g. Kinematics Notes">
+
+  <div class="form-row">
+    <div>
+      <label>Category</label>
+      <select class="form-control" id="category">
+        <option>Physics</option>
+        <option>Chemistry</option>
+        <option>Mathematics</option>
+        <option>Books</option>
+      </select>
+    </div>
+    <div>
+      <label>PDF Type</label>
+      <select class="form-control" id="pdfType">
+        <option>Notes</option>
+        <option>Module</option>
+        <option>PYQs</option>
+        <option>NCERT</option>
+        <option>Reference Book</option>
+        <option>Other</option>
+      </select>
+    </div>
+  </div>
+
+  <label>Select PDF File</label>
+  <input class="form-control" type="file" id="fileInput" accept=".pdf,application/pdf">
+
+  <button class="primary" id="saveBtn">Save to Library</button>
+  <button class="secondary" id="cancelBtn">Cancel</button>
+
+  <p id="message"></p>
+</div>
+
+<div class="filters" id="filters">
+  <button class="active" data-filter="All">All PDFs</button>
+  <button data-filter="Physics">Physics</button>
+  <button data-filter="Chemistry">Chemistry</button>
+  <button data-filter="Mathematics">Mathematics</button>
+  <button data-filter="Books">Books</button>
+</div>
+
+<div class="grid" id="pdfGrid">
+  <div class="empty">
+    <div>📂</div>
+    <strong>Your library is empty</strong>
+    <p>Start adding your JEE study PDFs.</p>
+  </div>
+</div>
+
+<footer>
+  JEE VAULT · BUILT FOR YOUR JEE JOURNEY
+  <br><br>
+  Your study material stays in this browser.
+</footer>
+
+</div>
+
+<!-- PDF VIEWER -->
+<div class="viewer" id="viewer">
+  <div class="viewer-box">
+    <div class="viewer-head">
+      <strong id="viewerTitle">PDF Preview</strong>
+      <div class="viewer-actions">
+        <button id="newTabBtn">↗ New Tab</button>
+        <button id="closeBtn">✕</button>
+      </div>
+    </div>
+
+    <iframe id="pdfViewer" title="PDF Preview"></iframe>
+
+    <div class="viewer-note">
+      If the preview is blank, use New Tab or Download.
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const DB = "JEE_VAULT_FRESH";
+const STORE = "documents";
+
+let database;
+let files = [];
+let activeFilter = "All";
+let currentURL = null;
+let currentFile = null;
+
+const $ = id => document.getElementById(id);
+
+// DATABASE
+function openDatabase() {
+  return new Promise((resolve,reject) => {
+    const request = indexedDB.open(DB,1);
+
+    request.onupgradeneeded = e => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains(STORE)) {
+        d.createObjectStore(STORE,{
+          keyPath:"id",
+          autoIncrement:true
+        });
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function dbAction(mode,action) {
+  return new Promise((resolve,reject) => {
+    const tx = database.transaction(STORE,mode);
+    const request = action(tx.objectStore(STORE));
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+    tx.onabort = () => reject(tx.error);
+  });
+}
+
+// LOAD DATA
+async function loadData() {
+  files = await dbAction("readonly",s=>s.getAll());
+  render();
+}
+
+// HELPERS
+function safe(value) {
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[c]);
+}
+
+function sizeText(bytes) {
+  if (bytes < 1024*1024)
+    return (bytes/1024).toFixed(0)+" KB";
+
+  return (bytes/1024/1024).toFixed(2)+" MB";
+}
+
+// DASHBOARD
+function render() {
+  $("total").textContent = files.length;
+
+  const bytes = files.reduce((s,f)=>s+f.size,0);
+  $("storage").textContent =
+    (bytes/1024/1024).toFixed(1)+" MB";
+
+  ["Physics","Chemistry","Mathematics","Books"].forEach(c=>{
+    $("c"+c).textContent =
+      files.filter(f=>f.category===c).length+" PDFs";
+  });
+
+  const query = $("search").value.toLowerCase();
+
+  const list = files.filter(f=>{
+    const cat = activeFilter==="All" ||
+      f.category===activeFilter;
+
+    const search = f.name.toLowerCase().includes(query) ||
+      f.type.toLowerCase().includes(query);
+
+    return cat && search;
+  });
+
+  $("resultCount").textContent = list.length+" FILES";
+
+  if (!list.length) {
+    $("pdfGrid").innerHTML = `
+      <div class="empty">
+        <div>📂</div>
+        <strong>No PDF found</strong>
+        <p>Try another search or add a PDF.</p>
+      </div>`;
+    return;
+  }
+
+  $("pdfGrid").innerHTML = list.map(f=>`
+    <div class="pdf-card">
+      <div class="pdf-top">
+        <div class="pdf-icon">PDF</div>
+        <small>${sizeText(f.size)}</small>
+      </div>
+
+      <h3>${safe(f.name)}</h3>
+
+      <div class="info">
+        ${safe(f.category)} · ${safe(f.type)}
+        <br>
+        Added ${new Date(f.date).toLocaleDateString()}
+      </div>
+
+      <span class="tag">${safe(f.category)}</span>
+
+      <div class="actions">
+        <button onclick="previewPDF(${f.id})">↗ Open</button>
+        <button onclick="downloadPDF(${f.id})">↓ Save</button>
+        <button class="del" onclick="deletePDF(${f.id})">✕</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+// UPLOAD
+$("addBtn").onclick = () => {
+  $("uploadPanel").classList.add("show");
+  $("uploadPanel").scrollIntoView({behavior:"smooth"});
+};
+
+$("cancelBtn").onclick = () => {
+  $("uploadPanel").classList.remove("show");
+};
+
+$("saveBtn").onclick = async () => {
+  const file = $("fileInput").files[0];
+  const name = $("pdfName").value.trim();
+
+  if (!file) {
+    $("message").textContent = "Please select a PDF.";
+    return;
+  }
+
+  if (file.type !== "application/pdf" &&
+      !file.name.toLowerCase().endsWith(".pdf")) {
+    $("message").textContent = "Only PDF files allowed.";
+    return;
+  }
+
+  if (!name) {
+    $("message").textContent = "Enter PDF name.";
+    return;
+  }
+
+  if (file.size > 100*1024*1024) {
+    $("message").textContent = "Maximum PDF size is 100 MB.";
+    return;
+  }
+
+  $("saveBtn").disabled = true;
+  $("message").textContent = "Saving PDF...";
+
+  try {
+    await dbAction("readwrite",s=>s.add({
+      name:name,
+      category:$("category").value,
+      type:$("pdfType").value,
+      size:file.size,
+      date:Date.now(),
+      blob:file
+    }));
+
+    $("pdfName").value="";
+    $("fileInput").value="";
+    $("uploadPanel").classList.remove("show");
+    $("message").textContent="PDF saved successfully!";
+
+    await loadData();
+
+  } catch(e) {
+    $("message").textContent =
+      "Unable to save. Browser storage may be full.";
+  } finally {
+    $("saveBtn").disabled = false;
+  }
+};
+
+// OPEN PDF IN PREVIEW
+async function previewPDF(id) {
+  const file = files.find(f=>f.id===id);
+  if (!file) return;
+
+  if (!(file.blob instanceof Blob)) {
+    alert("This PDF file is not available. Please upload it again.");
+    return;
+  }
+
+  closePDF();
+
+  currentFile = file;
+  currentURL = URL.createObjectURL(
+    new Blob([file.blob],{type:"application/pdf"})
+  );
+
+  $("viewerTitle").textContent = file.name;
+  $("pdfViewer").src = currentURL;
+  $("viewer").classList.add("show");
+}
+
+// OPEN PDF IN NEW TAB
+$("newTabBtn").onclick = () => {
+  if (!currentURL) return;
+
+  const tab = window.open(currentURL,"_blank");
+
+  if (!tab) {
+    alert("Popup blocked. Use the Save button to download the PDF.");
+  }
+};
+
+// CLOSE VIEWER
+function closePDF() {
+  $("pdfViewer").src = "about:blank";
+  $("viewer").classList.remove("show");
+
+  if (currentURL) {
+    URL.revokeObjectURL(currentURL);
+    currentURL = null;
+  }
+
+  currentFile = null;
+}
+
+$("closeBtn").onclick = closePDF;
+
+$("viewer").onclick = e => {
+  if (e.target === $("viewer")) closePDF();
+};
+
+// DOWNLOAD
+function downloadPDF(id) {
+  const file = files.find(f=>f.id===id);
+  if (!file) return;
+
+  const url = URL.createObjectURL(file.blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = file.name+".pdf";
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+
+// DELETE
+async function deletePDF(id) {
+  if (!confirm("Permanently delete this PDF?")) return;
+
+  await dbAction("readwrite",s=>s.delete(id));
+  await loadData();
+}
+
+// SEARCH
+$("search").addEventListener("input",render);
+
+// FILTERS
+$("filters").addEventListener("click",e=>{
+  const button=e.target.closest("[data-filter]");
+  if (!button) return;
+
+  activeFilter=button.dataset.filter;
+
+  document.querySelectorAll("#filters button").forEach(b=>{
+    b.classList.toggle("active",b===button);
+  });
+
+  document.querySelectorAll(".subject").forEach(card=>{
+    card.classList.toggle(
+      "active",
+      card.dataset.cat===activeFilter
+    );
+  });
+
+  render();
+});
+
+// CATEGORY CARDS
+document.querySelectorAll(".subject").forEach(card=>{
+  card.onclick=()=>{
+    activeFilter=card.dataset.cat;
+
+    document.querySelectorAll("#filters button").forEach(b=>{
+      b.classList.toggle(
+        "active",
+        b.dataset.filter===activeFilter
+      );
+    });
+
+    document.querySelectorAll(".subject").forEach(c=>{
+      c.classList.toggle("active",c===card);
+    });
+
+    render();
+    $("pdfGrid").scrollIntoView({behavior:"smooth"});
+  };
+});
+
+// CLOCK
+function updateClock() {
+  $("clock").textContent = new Date().toLocaleTimeString(
+    "en-IN",{
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit",
+      hour12:true
+    }
+  );
+}
+updateClock();
+setInterval(updateClock,1000);
+
+// START
+(async()=>{
+  try {
+    database=await openDatabase();
+    await loadData();
+  } catch(e) {
+    $("pdfGrid").innerHTML=`
+      <div class="empty">
+        <div>⚠️</div>
+        <strong>Storage unavailable</strong>
+        <p>Please open this website in a modern browser.</p>
+      </div>`;
+  }
+})();
+</script>
+
+</body>
+</html>
+
